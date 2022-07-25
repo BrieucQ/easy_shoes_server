@@ -1,35 +1,34 @@
-import "reflect-metadata";
-import { createConnection } from "typeorm";
-import { ApolloServer } from "apollo-server";
-import { buildSchema } from "type-graphql";
+import 'reflect-metadata';
+import { ApolloServer } from "apollo-server-express";
+import { buildSchema } from 'type-graphql';
+import { createConnection } from 'typeorm';
+import express from "express";
+import { User } from './entities/User';
 
 const PORT = process.env.PORT || 4000;
 
-const initialize = async () => {
-    await createConnection({
-        type: "mysql",
-        host: "mysql",
-        port: 3306,
-        username: "root",
-        password: "supersecret",
-        database: "test",
-        entities: [
-            __dirname + "/entities/*.js"
-        ],
-        synchronize: true,
-    });
+async function bootstrap() {
+    // database connection, the config is loaded from ormconfig.json
+    await createConnection()
 
+    const app = express();
+
+    // ... Building schema here
     const schema = await buildSchema({
-        resolvers: [__dirname + "/resolvers/*.{ts,js}"],
+        resolvers: [User],
     });
 
+    // Create the GraphQL server
     const server = new ApolloServer({
         schema,
-        playground: true,
     });
 
-    const { url } = await server.listen(PORT);
-    console.log(`Server is running, GraphQL Playground available at ${url}`);
-};
+    // Start the server
+    app.listen(PORT, () => {
+        console.log(
+          `Server is running, GraphQL Playground available at ${server.graphqlPath}`,
+        );
+      });
+}
 
-initialize();
+bootstrap();
