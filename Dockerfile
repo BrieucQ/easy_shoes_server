@@ -9,4 +9,4 @@ COPY .env .env
 COPY tsconfig.json tsconfig.json
 COPY ormconfig.json ormconfig.json
 
-CMD npm start
+CMD npx nodemon  src/index.ts --exec ts-node

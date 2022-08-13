@@ -3,32 +3,15 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import express from "express";
-import { User } from './entities/User';
+import { startServer } from './app';
+const PORT =  4000;
 
-const PORT = process.env.PORT || 4000;
-
-async function bootstrap() {
+async function main() {
     // database connection, the config is loaded from ormconfig.json
-    await createConnection()
-
-    const app = express();
-
-    // ... Building schema here
-    const schema = await buildSchema({
-        resolvers: [User],
-    });
-
-    // Create the GraphQL server
-    const server = new ApolloServer({
-        schema,
-    });
-
+    const app = await startServer();
     // Start the server
-    app.listen(PORT, () => {
-        console.log(
-          `Server is running, GraphQL Playground available at ${server.graphqlPath}`,
-        );
-      });
+    app.listen(4000);
+    console.log('server on port')
 }
 
-bootstrap();
+main();

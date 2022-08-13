@@ -4,17 +4,17 @@
     "port": 3306,
     "username": "root",
     "password": "root",
-    "database": "easyshoesdb",
+    "database": "easyshoes",
     "synchronize": true,
-    "logging": false,
+    "logging": true,
     "entities": [
-        "src/models/**/*.ts"
+        "src/entities/**/*.ts"
     ],
     "migrations": [
         "src/migrations/**/*.ts"
     ],
     "cli": {
-        "entitiesDir": "src/models",
+        "entitiesDir": "src/entities",
         "migrationsDir": "src/migrations"
     }
 }

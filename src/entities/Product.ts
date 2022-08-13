@@ -3,55 +3,55 @@ import {Entity,Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, Upd
 
 @Entity()
 @ObjectType()
-export class User extends BaseEntity {
+export class Product extends BaseEntity {
     @PrimaryGeneratedColumn()
     @Field(() => ID, { nullable: true })
     id!: number;
 
     @Column()
     @Field(() => String)
-    firstName?: string;
+    productName?: string;
 
     @Column()
     @Field(() => String)
-    lastName?: string;
+    description?: string;
 
     @Column()
     @Field(() => String)
-    email!: string;
+    picture!: string;
 
     @Column()
-    @Field(() => String)
-    phone!: string;
+    @Field(() => Number)
+    quantity!: number;
 
     @Column()
-    @Field(() => String)
-    password!: string;
+    @Field(() => Number)
+    price!: number;
 
     @CreateDateColumn()
     @Field(() => String)
-    createdAt!: string;
+    createdAt!: Date;
 
     @UpdateDateColumn()
     @Field(() => String)
     updatedAt!: Date;
 }
 
-// Input type for user
+// Input type for Product
 @InputType()
-export class UserInput {
+export class ProductInput {
     @Field()
-    firstName!: string;
+    productName!: string;
 
     @Field()
-    lastName!: string;
+    description!: string;
     
     @Field()
-    email!: string;
+    picture!: string;
     
     @Field()
-    phone!: string;
+    quantity!: number;
     
     @Field()
-    password!: string;
+    price!: number;
 }
