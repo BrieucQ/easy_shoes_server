@@ -1,5 +1,6 @@
 import { Field, ID, InputType, ObjectType } from 'type-graphql';
-import {Entity,Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, UpdateDateColumn} from 'typeorm'
+import {Entity,Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToMany} from 'typeorm'
+import { Order } from './Order';
 
 @Entity()
 @ObjectType()
@@ -27,6 +28,10 @@ export class Product extends BaseEntity {
     @Column()
     @Field(() => Number)
     price!: number;
+
+    @ManyToMany(() => Order, order => order.products)
+    @Field(() => [Order])
+    orders: Order[];
 
     @CreateDateColumn()
     @Field(() => String)

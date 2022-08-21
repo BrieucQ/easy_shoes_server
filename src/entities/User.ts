@@ -1,12 +1,14 @@
 import { Field, ID, InputType, ObjectType } from 'type-graphql';
-import {Entity,Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, UpdateDateColumn} from 'typeorm'
+import {Entity,Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToMany, OneToOne, JoinColumn, OneToMany} from 'typeorm'
+import { Adress } from './Adress';
+import { Order } from './Order';
 
 @Entity()
 @ObjectType()
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     @Field(() => ID, { nullable: true })
-    id!: number;
+    id: number;
 
     @Column()
     @Field(() => String)
@@ -18,15 +20,28 @@ export class User extends BaseEntity {
 
     @Column()
     @Field(() => String)
-    email!: string;
+    email: string;
 
     @Column()
     @Field(() => String)
-    phone!: string;
+    phone: string;
 
     @Column()
     @Field(() => String)
-    password!: string;
+    password: string;
+
+    @Column( {default: 'MEMBER'})
+    @Field(() => String)
+    role?: string;
+    
+    @OneToOne(() => Adress, adress => adress.id)
+    @JoinColumn()
+    @Field(() => Adress)
+    adress: Adress;
+
+    @OneToMany(() => Order, order => order.user)
+    @Field(() => [Order])
+    orders: Order[];
 
     @CreateDateColumn()
     @Field(() => String)
@@ -41,17 +56,20 @@ export class User extends BaseEntity {
 @InputType()
 export class UserInput {
     @Field()
-    firstName!: string;
+    firstName: string;
 
     @Field()
-    lastName!: string;
+    lastName: string;
     
     @Field()
-    email!: string;
+    email: string;
     
     @Field()
-    phone!: string;
+    phone: string;
     
     @Field()
-    password!: string;
+    password: string;
+
+    @Field()
+    role?: string;
 }

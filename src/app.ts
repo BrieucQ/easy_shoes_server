@@ -3,7 +3,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import express from "express";
-import {UserResolver}  from './resolvers/User';
+import { UserResolver } from './resolvers/User';
 import { customAuthChecker } from './auth/authCkecked';
 import { ProductResolver } from './resolvers/Product';
 const PORT = process.env.PORT || 4000;
@@ -20,7 +20,7 @@ export async function startServer() {
 
     // ... Building schema here
     const schema = await buildSchema({
-        resolvers: [UserResolver,ProductResolver],
+        resolvers: [UserResolver, ProductResolver],
         authChecker: customAuthChecker,
     });
 
